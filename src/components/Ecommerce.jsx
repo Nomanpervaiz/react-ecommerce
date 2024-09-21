@@ -14,6 +14,11 @@ function AppEcommerce() {
   const [loader, setLoader] = useState(true);
   const [ProducNotFound, setProducNotFound] = useState(false);
 
+
+
+console.log(isItemAdded(id));
+  
+  
   useEffect(() => {
     const getApiData = () => {
       fetch(`https://dummyjson.com/products/${id}`)
@@ -21,7 +26,7 @@ function AppEcommerce() {
           if (!res.ok) {
             setLoader(false);
             setProducNotFound(true);
-            return;
+            return
           }
           return res.json();
         })
@@ -40,8 +45,10 @@ function AppEcommerce() {
   }, [id]);
   const { thumbnail, brand, title, description, price } = productInf;
   
+
+
   return loader ? (
-    <AppSpinner className="appSpinner" />
+    <AppSpinner className="appSpinner"/>
   ) : ProducNotFound ? (
     <AppNotFound />
   ) : (
@@ -160,10 +167,11 @@ function AppEcommerce() {
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5"></div>
             <div className="flex justify-between">
               <span className="title-font font-medium text-2xl ">${price}</span>
+
               <AppButton
                 className=" flex  font-bold rounded"
                 icon={<ShoppingCartOutlined style={{ fontSize: 18 }} />}
-                name={isItemAdded(id) ? `Item Added (${isItemAdded(id).quantity})`:"Add to Card"}
+                name={isItemAdded(id) ? `Item Added (${isItemAdded(id).quantity})` : 'Add To Cart'}
                 onClick={() => addItemToCart({ ...productInf, quantity: 1 })}
               />
             </div>

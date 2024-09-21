@@ -5,7 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import AppButton from "./Button";
 import { auth, onAuthStateChanged, signOut } from "../utils/firebase";
 import {
@@ -13,6 +13,7 @@ import {
   MoonFilled,
   ShoppingFilled,
   SunFilled,
+  UserOutlined,
 
 } from "@ant-design/icons";
 import {
@@ -26,12 +27,16 @@ import UserProfileCard from "./UserProdile";
 import { Badge } from "antd";
 import { themeContext } from "../context/ThemeContext";
 import { contextCart } from "../context/CartContext";
+import { UserDetailContext } from "../context/UserContext";
 
 function AppNavbar() {
   const contextTheme = useContext(themeContext);
   const { appTheme, setAppTheme } = contextTheme;
   const { cartItems } = useContext(contextCart)
+  const userData = useContext(UserDetailContext)
 
+  console.log("userdata",userData);
+  
   const changeTheme = () => {
     if (appTheme == "light") {
       setAppTheme("dark");
@@ -40,7 +45,6 @@ function AppNavbar() {
     }
   };
 
-  const [userData, setUserData] = useState("");
   const [showOffcanvas, setShowOffcanvas] = useState(false);
 
   const handleClose = () => setShowOffcanvas(false);
@@ -55,23 +59,17 @@ function AppNavbar() {
         console.log(error.message);
       });
   };
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserData(user);
-        console.log("user found", user);
-      } else {
-        console.log("User not found");
-      }
-    });
-  }, []);
 
-  // Content for UserProfileCard
+
+
   const content = (
-    <div className="text-center">
-      <p>{userData.email}</p>
+    <div className="flex flex-col text-center align-items-center  ">
 
-      {/* <img src={userData.providerData.photoURL} alt="" /> */}
+      <div className="rounded-full  shadow-md w-10 h-10 flex justify-center ">
+        <UserOutlined />
+      </div>
+      <p className="p-3">{userData?.email}</p>
+
       <div className="flex justify-center">
         <AppButton
           name="Log out"
@@ -121,44 +119,43 @@ function AppNavbar() {
                     style={{ color: appTheme == "light" ? "black" : "white" }}
                   >
                     <li>
-                      <Link to="/home" onClick={handleClose}>
+                      <NavLink to="/home" className={({isActive})=>  isActive? "text-pink-600":"text-gray-400"} onClick={handleClose}>
                         <span className="NavbarIcons">
                           <HomeFilled />
                         </span>
                         Home
-                      </Link>
+                      </NavLink>
                     </li>
                     <li>
-                      <Link to="/about" onClick={handleClose}>
+                      <NavLink to="/about" className={({isActive})=> isActive? "text-pink-600":"text-gray-400"} onClick={handleClose}>
                         <span className="NavbarIcons">
                           <MehFilled />
                         </span>
                         About
-                      </Link>
+                      </NavLink>
                     </li>
                     <li>
-                      <Link to="/Product" onClick={handleClose}>
+                      <NavLink to="/Product" className={({isActive})=> isActive? "text-pink-600":"text-gray-400"} onClick={handleClose}>
                         <span className="NavbarIcons">
                           <SettingFilled />
                         </span>
                         Products
-                      </Link>
+                      </NavLink>
                     </li>
                     <li>
-                      <Link to="/contact" onClick={handleClose}>
+                      <NavLink to="/contact" className={({isActive})=> isActive? "text-pink-600":"text-gray-400"} onClick={handleClose}>
                         <span className="NavbarIcons">
                           <ContactsFilled />
                         </span>
                         Contact
-                      </Link>
+                      </NavLink>
                     </li>
                   </ul>
                 </Nav>
 
                 <div className="flex iconBtn">
                   <Link to={"/cart"}>
-                    <Badge style={{ margin: 10 }} count={cartItems.length} onClick={handleClose}>
-
+                    <Badge style={{ margin: 10 }} count={cartItems?.length} onClick={handleClose}>
                       <ShoppingFilled style={{ fontSize: 20, color: appTheme == "light" ? "black" : "white", }} className="flex justify-center border themeBtn my-2 mr-1 " />
                     </Badge>
                   </Link>
@@ -186,8 +183,8 @@ function AppNavbar() {
                     onClick={changeTheme}
                   />
 
-<UserProfileCard content={content} />
-                 
+                  <UserProfileCard content={content} />
+
                 </div>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

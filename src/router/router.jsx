@@ -17,10 +17,6 @@ function AppRouter() {
   const [isUser, setIsUser] = useState(false);
   const [loader, setLoader] = useState(true);
 
-
-
-
-
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {

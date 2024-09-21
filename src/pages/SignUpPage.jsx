@@ -5,9 +5,8 @@ import { useState } from "react";
 const AppSignUp = () =>{
 
     const [loader, setLoader] = useState(false);
-
-
-    const createAccount = (value)=>{
+    
+    const createAccount = (value)=>{        
         createUserWithEmailAndPassword(auth, value.email, value.password)
         .then((userCredential) => {
             setLoader(true)
@@ -24,4 +23,4 @@ return(
     <SignUpForm  accountRegister={createAccount} className={"signUpPage"} loader={loader} />
     )
 } 
-export default AppSignUp;
+export default AppSignUp ; 
