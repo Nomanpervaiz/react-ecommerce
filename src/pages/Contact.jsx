@@ -56,7 +56,7 @@ function AppContact() {
             Feedback
           </h2>
           <p className="leading-relaxed mb-5 text-gray-400">
-            Post-ironic portland shabby chic echo park, banjo fashion axe
+            Contact us without any hesitation we are here to help you!
           </p>
           <div className="relative mb-4">
             <label htmlFor="name" className="leading-7 text-sm text-gray-400">
@@ -94,10 +94,7 @@ function AppContact() {
           <button className="text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded text-lg">
             Submit
           </button>
-          <p className="text-xs text-gray-400 mt-3">
-            Chicharrones blog helvetica normcore iceland tousled brook viral
-            artisan.
-          </p>
+        
         </div>
       </div>
     </section>

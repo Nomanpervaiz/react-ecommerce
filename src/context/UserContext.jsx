@@ -1,28 +1,39 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react';
-import { auth } from '../utils/firebase';
+import { auth, db } from '../utils/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 const UserDetailContext = createContext();
 
 const UserContextProvider = ({ children }) => {
   const [userDetail, setUserDetail] = useState(null);
+  const [userDbDetail, setUserDbDetail] = useState(null);
 
+  
+  
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setUserDetail(user);
+        try {
+          const docRef = doc(db, "users", user.uid);
+          const userInfo = await getDoc(docRef);
+          setUserDetail(user);
+          setUserDbDetail(userInfo?.data());
+        } catch (error) {
+          console.error("Error fetching user details from Firestore:", error);
+        }
       } else {
+        setUserDetail(null); 
+        setUserDbDetail(null);
         console.log("User not found");
-        setUserDetail(null); // Set to null if no user
       }
     });
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 
   return (
-    <UserDetailContext.Provider value={userDetail}>
+    <UserDetailContext.Provider value={{ userDetail, userDbDetail }}>
       {children}
     </UserDetailContext.Provider>
   );
@@ -30,3 +41,4 @@ const UserContextProvider = ({ children }) => {
 
 export { UserDetailContext };
 export default UserContextProvider;
+

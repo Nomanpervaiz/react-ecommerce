@@ -34,7 +34,7 @@ const AppLayout = ({ children }) => {
             margin: "0px 0px",
             padding: "0px 50px ",
             minHeight: innerHeight,
-            backgroundColor: appTheme == "light" ? "white" : "black",
+            backgroundColor: appTheme == "light" ? "white" : "#111827",
             color: appTheme == "light" ? "black" : "white"
             
           }}
@@ -44,7 +44,7 @@ const AppLayout = ({ children }) => {
           {children}
         </Content>
       <AppFooter   style={{
-            backgroundColor: appTheme == "light" ? "white" : "black",
+            backgroundColor: appTheme == "light" ? "white" : "#111827",
             color: appTheme == "light" ? "black" : "white"
             
           }} />

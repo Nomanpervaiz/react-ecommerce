@@ -3,9 +3,11 @@ import myImage from "../assets/pngwing.com (9).png";
 import AppAbout from './About';
 import AppProduct from './Product';
 import AppContact from './Contact';
+import { useNavigate } from 'react-router-dom';
 
 function AppHome() {
- 
+
+  const navigate = useNavigate()
 
   return (
    
@@ -21,8 +23,8 @@ function AppHome() {
               Welcome to GlowUp Cosmetics, your ultimate destination for beauty that shines from within. Founded with a passion for enhancing natural beauty, we offer a diverse range of cosmetics that cater to all skin types, tones, and textures.
             </p>
             <div className="flex justify-center">
-              <AppButton className="btn1" name="Shop Now" path="/product" />
-              <AppButton className="btn2" name="Contact us" path="/contact" />
+              <AppButton className="btn1" name="Shop Now" onClick={()=>{navigate("/product")}} />
+              <AppButton className="btn2" name="Contact us" onClick={()=>{navigate("/contact")}} />
             </div>
           </div>
           <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0 imgDiv">

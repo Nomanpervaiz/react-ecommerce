@@ -1,7 +1,8 @@
-import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import React, { useContext } from 'react';
+import { Button, Checkbox, Form, Input, message } from 'antd';
 import { Link } from 'react-router-dom';
 import AppSpinner from './Spinner';
+import { themeContext } from '../context/ThemeContext';
 
 
 const onFinishFailed = (errorInfo) => {
@@ -9,13 +10,16 @@ const onFinishFailed = (errorInfo) => {
 };
 
 export default function SignUpForm({ accountRegister, className, loader }) {
+  const contextTheme = useContext(themeContext)
+  const { appTheme } = contextTheme
+
   return (
     loader ? < AppSpinner className="appSpinner" />
       :
       <div className={className}>
-
+        <h1 className='text-center font-semibold text-4xl '>Sign-up</h1>
         <Form
-          className=' my-16 signupForm p-3'
+          className=' signupForm p-3'
           name="basic"
 
           style={{
@@ -44,7 +48,6 @@ export default function SignUpForm({ accountRegister, className, loader }) {
             name="email"
             rules={[
               {
-
                 required: true,
                 message: 'Please input your username!',
               },
@@ -65,13 +68,14 @@ export default function SignUpForm({ accountRegister, className, loader }) {
           >
             <Input.Password placeholder="Enter your Password" />
           </Form.Item>
+<div className='text-center'>
 
           <Form.Item
             name="remember"
             valuePropName="checked"
 
           >
-            <Checkbox className='text-white'>Remember me</Checkbox>
+            <Checkbox style={{color: appTheme === "light" ? "black":"white" }}>Remember me</Checkbox>
           </Form.Item>
 
           <Form.Item
@@ -84,8 +88,9 @@ export default function SignUpForm({ accountRegister, className, loader }) {
           <Form.Item
 
           >
-            <p className='text-white'>Already have an Account? <Link to={"/signIn"} style={{ color: "blue", fontWeight: 'semibold' }}> Login</Link></p>
+            <p  style={{color: appTheme === "light" ? "black":"white" }}>Already have an Account? <Link to={"/signIn"} style={{ color: "blue", fontWeight: 'semibold' }}> Login</Link></p>
           </Form.Item>
+          </div>
 
         </Form>
       </div>

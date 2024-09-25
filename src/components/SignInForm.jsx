@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
 import AppSpinner from './Spinner';
+import { themeContext } from '../context/ThemeContext';
 
 const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
 };
 
  function SignInForm({getLoginVal,className,loader}  ) {
+  const contextTheme = useContext(themeContext)
+  const { appTheme } = contextTheme
     return(
       loader ? < AppSpinner className="appSpinner" />
       :
         <div className={className}>
-
+          <h1 className='text-center text-4xl font-semibold'>Login</h1>
         <Form
-        className='mx-auto my-24  signupForm p-3'
+        className='mx-auto my-0  signupForm p-3'
         name="basic"
 
         style={{
@@ -53,12 +56,14 @@ const onFinishFailed = (errorInfo) => {
           <Input.Password placeholder="Enter your Password" />
         </Form.Item>
 
+<div className='text-center'>
+
         <Form.Item
             name="remember"
             valuePropName="checked"
-
-        >
-            <Checkbox className='text-white'>Remember me</Checkbox>
+            
+            >
+            <Checkbox  style={{color: appTheme === "light" ? "black":"white" }}>Remember me</Checkbox>
         </Form.Item>
 
         <Form.Item
@@ -69,11 +74,11 @@ const onFinishFailed = (errorInfo) => {
             </Button>
         </Form.Item>
         <Form.Item
-
         >
-            <p className='text-white'>Don't have an Account? <Link to={"/"} style={{ color: "blue", fontWeight: 'semibold' }}> Signup</Link></p>
+            <p  style={{color: appTheme === "light" ? "black":"white" }}>Don't have an Account? <Link to={"/signup"} style={{ color: "blue", fontWeight: 'semibold' }}> Signup</Link></p>
         </Form.Item>
 
+          </div>
     </Form>
     </div>
 

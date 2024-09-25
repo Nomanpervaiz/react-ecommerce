@@ -38,10 +38,14 @@ body {
 }
 
 .btn1 {
-  background-color: rgb(155, 176, 185);
   font-weight: 500;
   color: white;
   padding: 20px;
+  background-color: rgb(155, 176, 185) !important;
+}
+.btn1:hover {
+  color: white !important;
+  background-color: rgb(137, 180, 199) !important;
 }
 .btn2 {
   padding: 20px;
@@ -60,7 +64,6 @@ body {
   object-fit: contain;
   background-color: rgb(155, 176, 185);
 }
-
 .productDetaiBox {
   display: flex;
   flex-direction: column;
@@ -126,7 +129,6 @@ body {
 }
 
 .signupForm {
-  text-align: center;
   margin: auto;
 }
 
@@ -140,12 +142,13 @@ body {
 .logOutBtn {
   color: white;
   background-color: black;
-  outline: none;
+  outline: none ;
   border: none;
 }
 .logOutbtn:hover {
   color: white !important;
   background-color: rgb(77, 77, 77) !important;
+  border: none ;
 }
 
 .NavbarIcons {
@@ -159,6 +162,9 @@ body {
   border-radius: 50%;
   width: 41px;
   height: 40px;
+  border: none !important;
+  background-color: transparent !important;
+  outline: none !important;
 }
 
 .footerMain {
@@ -186,12 +192,11 @@ body {
   padding-top: 100px;
 }
 .signUpPage form {
-  background-color: rgb(224, 224, 224);
   padding: 30px !important;
   padding-top: 40px !important;
   border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0.671);
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
+
 }
 
 .signInPage {
@@ -199,16 +204,28 @@ body {
   padding-top: 100px;
 }
 .signInPage form {
-  background-color: rgb(224, 224, 224);
+  
   padding: 30px !important;
   padding-top: 40px !important;
   border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0.671);
-  backdrop-filter: blur(10px);
+
 }
 .navMain {
   justify-content: center;
+  padding-left: 80px;
 }
+.iconBtn{
+  align-items: center;
+  }
+
+
+  .togler{
+    color: white !important;
+    background-color: white;
+  }
 
 
 
+  .logo{
+    margin-left:-6px  ;
+  }

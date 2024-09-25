@@ -12,6 +12,8 @@ import { auth, onAuthStateChanged } from "../utils/firebase";
 import { useEffect, useState } from "react";
 import AppSpinner from "../components/Spinner";
 import AppCartPage from "../pages/Cartitempage";
+import UserProfile from "../components/UserProfile";
+
 
 function AppRouter() {
   const [isUser, setIsUser] = useState(false);
@@ -21,6 +23,7 @@ function AppRouter() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsUser(true);
+
       } else {
         console.log("User not found");
         setIsUser(false);
@@ -29,99 +32,105 @@ function AppRouter() {
     });
   }, []);
 
-  return (
+  return loader ? (
+    <AppSpinner className="routerLoader" />
+  ) : (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/profile"
+          element={isUser ?
+            <AppLayout>
+              <UserProfile />
+            </AppLayout>
+            :
+            <Navigate to={"/"} />
+          }
+        />
+        <Route
+          path="/signup"
+          element={isUser ? <Navigate to={"/"} /> :
+            <AppLayout>
+              <AppSignUp />
+            </AppLayout>
+          }
+        />
+        <Route
+          path="/signin"
+          element={isUser ? <Navigate to={"/"} /> :
+            <AppLayout>
+              <AppSignIn />
+            </AppLayout>
+          }
+        />
 
-    loader ?
-      <AppSpinner className="routerLoader" />
-      :
+        <Route
+          path="/"
+          element={
+            <AppLayout>
+              <AppHome />
+            </AppLayout>
+          }
+        />
+        <Route
+          path="/home"
+          element={
+            <AppLayout>
+              <AppHome />
+            </AppLayout>
+          }
+        />
 
-      <BrowserRouter >
-        <Routes >
-          <Route
-            path="/"
-            element={isUser ? <Navigate to={"/home"} /> : <AppSignUp />}
-          />
-          <Route
-            path="/Signin"
-            element={isUser ? <Navigate to={"/home"} /> : <AppSignIn />}
-          />
-          <Route
-            path="/home"
-            element={
-              isUser ? (
-                <AppLayout  >
-                  <AppHome />
-                </AppLayout>
-              ) : (
-                <Navigate to={"/"} />
-              )
-            }
-          />
-          <Route
-            path="/product"
-            element={
-              isUser ? (
-                <AppLayout>
-                  <AppProduct />
-                </AppLayout>
-              ) : (
-                <Navigate to={"/"} />
-              )
-            }
-          />
-          <Route
-            path="/about"
-            element={
-              isUser ? (
-                <AppLayout>
-                  <AppAbout />
-                </AppLayout>
-              ) : (
-                <Navigate to={"/"} />
-              )
-            }
-          />
-          <Route
-            path="/contact"
-            element={
-              isUser ? (
-                <AppLayout>
-                  <AppContact />
-                </AppLayout>
-              ) : (
-                <Navigate to={"/"} />
-              )
-            }
-          />
-          <Route
-            path="/cart"
-            element={
-              isUser ? (
-                <AppLayout>
-                  <AppCartPage  />
-                </AppLayout>
-              ) : (
-                <Navigate to={"/"} />
-              )
-            }
-          />
-          <Route
-            path="/product/:id"
-            element={
-              isUser ? (
-                <AppLayout>
-                  <AppEcommerce />
-                </AppLayout>
-              ) : (
-                <Navigate to={"/"} />
-              )
-            }
-          />
-          <Route path="*" element={<AppNotFound />} />
-        </Routes>
-      </BrowserRouter>
+        <Route
+          path="/product"
+          element={
+            <AppLayout>
+              <AppProduct />
+            </AppLayout>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <AppLayout>
+              <AppAbout />
+            </AppLayout>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <AppLayout>
+              <AppContact />
+            </AppLayout>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            isUser ? (
+              <AppLayout>
+                <AppCartPage />
+              </AppLayout>
+            ) : (
+              <Navigate to={"/signup"} />
 
-  )
+            )
+          }
+        />
+        <Route
+          path="/product/:id"
+          element={
+              <AppLayout>
+                <AppEcommerce />
+              </AppLayout>
+            
+          }
+        />
+        <Route path="*" element={<AppNotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default AppRouter;
